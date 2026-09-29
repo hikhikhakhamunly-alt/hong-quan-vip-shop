@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - HỒNG QUÂN VIP</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-wrap{max-width:1100px;margin:auto;padding:16px}
+    .admin-header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .admin-header h1{font-size:clamp(24px,5vw,38px)}
+    .admin-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+    .admin-tabs button{width:auto;margin:0;padding:12px 18px}
+    .admin-tabs button.active{outline:2px solid #65eaff}
+    .admin-section{display:none}
+    .admin-section.active{display:block}
+    .table-wrap{overflow-x:auto;margin-top:16px;border:1px solid #17618a;border-radius:12px}
+    table{width:100%;border-collapse:collapse;min-width:650px;background:#061321}
+    th,td{padding:12px;border-bottom:1px solid #17415c;text-align:left;font-size:14px;vertical-align:top}
+    th{color:#5cddff;background:#0b2034}
+    td{color:#d8eaf6}
+    .status-select{min-width:145px;padding:9px;border-radius:8px;background:#04111e;color:white;border:1px solid #285a78}
+    .notice{padding:13px;border:1px solid #9b7422;background:#33270b;border-radius:10px;color:#ffe3a0;line-height:1.5}
+    .empty{padding:20px;color:#a8cde5;text-align:center}
+    .admin-btn{width:auto;padding:10px 14px;margin:0}
+    .danger{background:#672c39;color:white;border:1px solid #b85b70}
+    .muted{font-size:12px;color:#9cb7ca}
+    .stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+    .stat{padding:16px;border:1px solid #17618a;border-radius:12px;background:#081b2d}
+    .stat strong{display:block;color:#5cddff;font-size:25px;margin-top:8px}
+    @media(max-width:600px){.stat-grid{grid-template-columns:1fr}.admin-wrap{padding:8px}}
+  </style>
+</head>
+<body>
+  <main class="admin-wrap">
+    <header class="hero admin-header">
+      <div>
+        <div class="tag">HỒNG QUÂN VIP SYSTEM</div>
+        <h1>QUẢN TRỊ ADMIN</h1>
+        <p>Quản lý yêu cầu bài tập và đơn mua KEY VIP</p>
+      </div>
+      <a class="button secondary admin-btn" href="index.html">Trang chủ</a>
+    </header>
+
+    <section class="panel">
+      <div class="notice">
+        <strong>Chế độ giao diện thử nghiệm:</strong>
+        Trang này chưa kết nối dữ liệu máy chủ. Các đơn hiển thị ở đây
+        chưa phải đơn thật của khách hàng. Không dùng nút trạng thái
+        để xác nhận thanh toán hoặc cấp KEY thật.
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat">Đơn bài tập<strong id="homeworkCount">0</strong></div>
+        <div class="stat">Đơn KEY VIP<strong id="keyCount">0</strong></div>
+        <div class="stat">Tổng đơn thử nghiệm<strong id="totalCount">0</strong></div>
+      </div>
+
+      <div class="admin-tabs">
+        <button type="button" class="active" data-tab="homework">📝 Đơn bài tập</button>
+        <button type="button" data-tab="keys">🔑 Đơn KEY VIP</button>
+      </div>
+
+      <section id="homework" class="admin-section active">
+        <h2>📝 Quản lý đơn làm bài tập</h2>
+        <p class="muted">Các đơn mẫu chỉ đọc từ dữ liệu thử nghiệm của trình duyệt này.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tài khoản</th>
+                <th>Bài tập</th>
+                <th>Hình thức</th>
+                <th>Ghi chú</th>
+                <th>Trạng thái thử nghiệm</th>
+              </tr>
+            </thead>
+            <tbody id="homeworkRows">
+              <tr><td colspan="5" class="empty">Chưa có dữ liệu thử nghiệm.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="keys" class="admin-section">
+        <h2>🔑 Quản lý đơn mua KEY VIP</h2>
+        <p class="muted">Đơn thử nghiệm không chứng minh khách đã thanh toán.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tài khoản</th>
+                <th>Gói KEY</th>
+                <th>Giá</th>
+                <th>Thanh toán</th>
+                <th>Liên hệ</th>
+                <th>Trạng thái thử nghiệm</th>
+              </tr>
+            </thead>
+            <tbody id="keyRows">
+              <tr><td colspan="6" class="empty">Chưa có dữ liệu thử nghiệm.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+    <footer>© HỒNG QUÂN VIP SHOP</footer>
+  </main>
+
+  <script>
+    "use strict";
+
+    // Dữ liệu thử nghiệm chỉ tồn tại trong phiên trình duyệt.
+    // Không phải hệ thống xác thực Admin hoặc lưu đơn thật.
+    const safeText = value => String(value ?? "")
+      .replace(/[&<>"']/g, char => ({
+        "&":"&amp;", "<":"&lt;", ">":"&gt;",
+        '"':"&quot;", "'":"&#39;"
+      }[char]));
+
+    function readDraft(key) {
+      try {
+        const value = JSON.parse(sessionStorage.getItem(key) || "[]");
+        return Array.isArray(value) ? value : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function showHomework() {
+      const rows = document.getElementById("homeworkRows");
+      const orders = readDraft("hqHomeworkDraftOrders");
+      document.getElementById("homeworkCount").textContent = orders.length;
+
+      if (!orders.length) {
+        rows.innerHTML = '<tr><td colspan="5" class="empty">Chưa có dữ liệu thử nghiệm.</td></tr>';
+        return;
+      }
+
+      rows.innerHTML = orders.map(order => `
+        <tr>
+          <td>${safeText(order.username)}</td>
+          <td>${safeText(order.lesson)}</td>
+          <td>${safeText(order.payment)}</td>
+          <td>${safeText(order.note)}</td>
+          <td><span class="muted">Bản thử nghiệm</span></td>
+        </tr>
+      `).join("");
+    }
+
+    function showKeys() {
+      const rows = document.getElementById("keyRows");
+      const orders = readDraft("hqVipDraftOrders");
+      document.getElementById("keyCount").textContent = orders.length;
+
+      if (!orders.length) {
+        rows.innerHTML = '<tr><td colspan="6" class="empty">Chưa có dữ liệu thử nghiệm.</td></tr>';
+        return;
+      }
+
+      rows.innerHTML = orders.map(order => `
+        <tr>
+          <td>${safeText(order.account)}</td>
+          <td>${safeText(order.plan)}</td>
+          <td>${safeText(Number(order.price || 0).toLocaleString("vi-VN"))}đ</td>
+          <td>${safeText(order.payment)}</td>
+          <td>${safeText(order.contact)}</td>
+          <td><span class="muted">Chờ xác minh ngoài hệ thống</span></td>
+        </tr>
+      `).join("");
+    }
+
+    function refresh() {
+      showHomework();
+      showKeys();
+      const total =
+        readDraft("hqHomeworkDraftOrders").length +
+        readDraft("hqVipDraftOrders").length;
+      document.getElementById("totalCount").textContent = total;
+    }
+
+    document.querySelectorAll("[data-tab]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-tab]").forEach(item =>
+          item.classList.remove("active")
+        );
+        document.querySelectorAll(".admin-section").forEach(section =>
+          section.classList.remove("active")
+        );
+        button.classList.add("active");
+        document.getElementById(button.dataset.tab).classList.add("active");
+      });
+    });
+
+    refresh();
+  </script>
+</body>
+</html>

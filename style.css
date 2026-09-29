@@ -1,402 +1,158 @@
-
-/* =========================================
-   HONG QUAN VIP - STYLE.CSS
-   ========================================= */
-
-* {
-  box-sizing: border-box;
-}
+/* ===== GIAO DIỆN XANH DÙNG CHUNG CHO CẢ 3 TRANG ===== */
 
 html {
-  scroll-behavior: smooth;
+  min-height: 100%;
 }
 
 body {
-  margin: 0;
   min-height: 100vh;
-  color: #eaf6ff;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #06152d;
+  color: #f4faff;
+  background-color: #061a36;
   background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(0, 145, 255, .22), transparent 55%),
-    linear-gradient(135deg, #06152d, #09264a 55%, #06152d);
+    radial-gradient(ellipse at top, rgba(0, 145, 255, 0.28), transparent 55%),
+    linear-gradient(135deg, #061a36, #073b70 55%, #04152e);
   background-attachment: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
 }
 
-/* HEADER */
-
-.hero {
-  width: 100%;
-  padding: 48px 20px 35px;
+/* Tiêu đề */
+h1, h2, h3 {
+  color: #8ed8ff;
   text-align: center;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 153, 255, .2),
-    rgba(0, 225, 255, .08),
-    rgba(0, 65, 160, .2)
-  );
-  border-bottom: 1px solid rgba(52, 190, 255, .35);
-  box-shadow: 0 8px 35px rgba(0, 145, 255, .12);
+  line-height: 1.35;
+  text-shadow: 0 0 12px rgba(0, 174, 255, 0.35);
 }
 
-.tag {
-  display: inline-block;
-  padding: 8px 16px;
-  color: #80eaff;
-  background: rgba(0, 160, 255, .12);
-  border: 1px solid rgba(70, 205, 255, .5);
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  box-shadow: 0 0 16px rgba(0, 170, 255, .18);
+/* Khung nội dung và biểu mẫu */
+main, section, .container, .card, .form-container,
+.login-box, .panel, .content {
+  box-sizing: border-box;
+  max-width: 900px;
+  margin: 20px auto;
 }
 
-.hero h1 {
-  margin: 18px 0 10px;
-  color: #fff;
-  font-size: clamp(28px, 6vw, 46px);
-  font-weight: 900;
-  letter-spacing: 2px;
-  text-shadow: 0 0 10px rgba(0, 195, 255, .7),
-               0 0 28px rgba(0, 125, 255, .45);
+/* Khung có nền trong để chữ nổi bật */
+.card, .form-container, .login-box, .panel, .content {
+  padding: 24px;
+  color: #f4faff;
+  background: rgba(5, 28, 58, 0.88);
+  border: 1px solid rgba(91, 194, 255, 0.55);
+  border-radius: 18px;
+  box-shadow: 0 0 22px rgba(0, 145, 255, 0.18);
 }
 
-.hero p {
-  max-width: 650px;
-  margin: 0 auto;
-  color: #b8d9f5;
-  font-size: 15px;
-  line-height: 1.7;
-}
-
-/* MAIN LAYOUT */
-
-.container {
-  width: min(100% - 32px, 1050px);
-  margin: 35px auto;
-}
-
-.panel {
-  padding: 26px;
-  background: rgba(5, 26, 55, .42);
-  border: 1px solid rgba(54, 170, 255, .4);
-  border-radius: 22px;
-  box-shadow: 0 12px 38px rgba(0, 0, 0, .22),
-              0 0 22px rgba(0, 145, 255, .1);
-  backdrop-filter: blur(8px);
-}
-
-h2, h3 {
-  color: #8eeaff;
-  text-shadow: 0 0 12px rgba(0, 180, 255, .25);
-}
-
-p {
-  line-height: 1.7;
-}
-
-/* HOMEWORK FORM */
-
-#homeworkForm {
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-  width: 100%;
-  padding: 0;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-#homeworkForm label {
+/* Nhãn và chữ hướng dẫn */
+label {
   display: block;
-  margin-top: 5px;
-  color: #8eeaff;
-  font-size: 15px;
+  margin: 14px 0 7px;
+  color: #d9f2ff;
+  font-size: 17px;
   font-weight: 700;
 }
 
-/* INPUTS - TRANSPARENT BLUE */
-
-#homeworkForm input,
-#homeworkForm select,
-#homeworkForm textarea {
+/* Ô nhập liệu lớn, dễ nhìn */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  box-sizing: border-box;
   display: block;
   width: 100%;
-  min-height: 50px;
-  padding: 14px 16px;
-  color: #f3fbff;
-  background: rgba(0, 125, 255, .13);
-  border: 1.5px solid #168bff;
-  border-radius: 13px;
+  min-height: 52px;
+  margin: 8px 0 16px;
+  padding: 13px 16px;
+  color: #10243b;
+  background: #f5fbff;
+  border: 2px solid #73caff;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 17px;
   outline: none;
-  font-family: inherit;
-  font-size: 15px;
-  transition: border-color .25s ease,
-              background .25s ease,
-              box-shadow .25s ease;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-#homeworkForm input::placeholder,
-#homeworkForm textarea::placeholder {
-  color: #a9c9e8;
+/* Ô nhập nhiều dòng */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Khi bấm vào ô nhập */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #00d5ff;
+  box-shadow: 0 0 0 4px rgba(0, 213, 255, 0.2);
+}
+
+/* Chữ gợi ý trong ô nhập */
+input::placeholder,
+textarea::placeholder {
+  color: #637b91;
   opacity: 1;
 }
 
-#homeworkForm input:focus,
-#homeworkForm select:focus,
-#homeworkForm textarea:focus {
-  background: rgba(0, 155, 255, .23);
-  border-color: #62edff;
-  box-shadow: 0 0 0 3px rgba(0, 190, 255, .15),
-              0 0 18px rgba(0, 190, 255, .28);
-}
-
-#homeworkForm select {
-  cursor: pointer;
-}
-
-#homeworkForm select option {
-  color: #fff;
-  background: #09264a;
-}
-
-#homeworkForm textarea {
-  min-height: 135px;
-  resize: vertical;
-  line-height: 1.65;
-}
-
-/* BUTTONS */
-
-#homeworkForm button,
-button {
-  min-height: 49px;
-  padding: 13px 20px;
-  color: #03172c;
-  background: linear-gradient(100deg, #00c6ff, #36f1d0);
-  border: 0;
-  border-radius: 13px;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 5px 20px rgba(0, 190, 255, .24);
-  transition: transform .2s ease,
-              filter .2s ease,
-              box-shadow .2s ease;
-}
-
-#homeworkForm button {
-  width: 100%;
-  margin-top: 9px;
-}
-
-#homeworkForm button:hover,
-button:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 190, 255, .4);
-}
-
-#homeworkForm button:active,
-button:active {
-  transform: translateY(0);
-}
-
-#homeworkForm button:disabled {
-  opacity: .65;
-  cursor: wait;
-  transform: none;
-}
-
-/* STATUS MESSAGE */
-
-#homeworkForm .status,
-.status {
-  min-height: 22px;
-  margin: 5px 0;
-  color: #aeeaff;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-}
-
-/* LINKS */
-
-a {
-  color: #62dfff;
-  text-decoration: none;
-  transition: color .2s ease;
-}
-
-a:hover {
-  color: #fff;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 45px;
-  margin-top: 16px;
-  padding: 11px 18px;
-  color: #03172c;
-  background: linear-gradient(100deg, #00c6ff, #36f1d0);
-  border: 0;
+/* Nút bấm */
+button, .btn, input[type="submit"] {
+  box-sizing: border-box;
+  min-height: 48px;
+  padding: 12px 22px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #087cf0, #00b9e8);
+  border: 1px solid #80dcff;
   border-radius: 12px;
-  font-weight: 800;
-  text-align: center;
-  box-shadow: 0 5px 18px rgba(0, 190, 255, .2);
-}
-
-.button:hover {
-  color: #03172c;
-  filter: brightness(1.1);
-}
-
-.button.secondary {
-  color: #bceeff;
-  background: rgba(0, 135, 255, .13);
-  border: 1px solid #168bff;
-  box-shadow: none;
-}
-
-.button.secondary:hover {
-  color: #fff;
-  background: rgba(0, 145, 255, .28);
-}
-
-/* CARDS AND PLANS */
-
-.grid,
-.cards,
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  gap: 18px;
-}
-
-.card,
-.product,
-.plan {
-  padding: 20px;
-  color: #eaf6ff;
-  background: rgba(0, 120, 255, .09);
-  border: 1px solid rgba(40, 165, 255, .38);
-  border-radius: 17px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
-  transition: transform .2s ease,
-              border-color .2s ease,
-              box-shadow .2s ease;
-}
-
-.card:hover,
-.product:hover,
-.plan:hover {
-  transform: translateY(-3px);
-  border-color: #45dfff;
-  box-shadow: 0 10px 28px rgba(0, 145, 255, .2);
-}
-
-/* NAVIGATION */
-
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-nav a {
-  padding: 10px 15px;
-  color: #bdeaff;
-  background: rgba(0, 125, 255, .1);
-  border: 1px solid rgba(45, 170, 255, .35);
-  border-radius: 11px;
+  font: inherit;
+  font-size: 17px;
   font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 16px rgba(0, 145, 255, 0.22);
+  transition: transform 0.2s, filter 0.2s;
 }
 
-nav a:hover {
-  color: #fff;
-  background: rgba(0, 150, 255, .24);
-  border-color: #55dfff;
+button:hover, .btn:hover, input[type="submit"]:hover {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
 }
 
-/* ADMIN TABLE */
-
+/* Bảng dữ liệu nếu có */
 table {
   width: 100%;
   border-collapse: collapse;
-  color: #eaf6ff;
+  color: #f4faff;
+  background: rgba(3, 23, 49, 0.75);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 th, td {
   padding: 12px;
-  border-bottom: 1px solid rgba(70, 160, 255, .25);
+  border: 1px solid rgba(115, 202, 255, 0.35);
   text-align: left;
-  overflow-wrap: anywhere;
 }
 
 th {
-  color: #8eeaff;
-  background: rgba(0, 130, 255, .13);
+  color: #bdeaff;
+  background: rgba(0, 119, 220, 0.35);
 }
 
-/* RESPONSIVE */
-
+/* Điện thoại và màn hình nhỏ */
 @media (max-width: 600px) {
-  .hero {
-    padding: 35px 16px 27px;
-  }
-
-  .hero h1 {
-    letter-spacing: 1px;
-  }
-
-  .container {
-    width: calc(100% - 22px);
-    margin: 22px auto;
-  }
-
-  .panel {
-    padding: 17px;
-    border-radius: 17px;
-  }
-
-  #homeworkForm {
-    gap: 11px;
-  }
-
-  #homeworkForm input,
-  #homeworkForm select,
-  #homeworkForm textarea {
+  body {
+    padding: 10px;
     font-size: 16px;
   }
 
-  .grid,
-  .cards,
-  .products {
-    grid-template-columns: 1fr;
+  main, section, .container, .card, .form-container,
+  .login-box, .panel, .content {
+    width: 100%;
+    margin: 12px auto;
+    padding: 16px;
   }
 
-  nav {
-    gap: 7px;
-  }
-
-  nav a {
-    padding: 9px 11px;
-    font-size: 13px;
-  }
-
-  table {
-    font-size: 13px;
-  }
-
-  th, td {
-    padding: 9px 7px;
+  input:not([type="checkbox"]):not([type="radio"]),
+  select, textarea, button, .btn, input[type="submit"] {
+    font-size: 16px;
+    min-height: 50px;
   }
 }

@@ -29,8 +29,8 @@
         <label for="payment">Hình thức thanh toán</label>
         <select id="payment" name="payment" required>
           <option value="">-- Chọn hình thức --</option>
-          <option>KEY VIP</option>
-          <option>Trao đổi trực tiếp</option>
+          <option value="KEY VIP">KEY VIP</option>
+          <option value="Trao đổi trực tiếp">Trao đổi trực tiếp</option>
         </select>
 
         <label for="note">Ghi chú hoặc nội dung bài</label>
@@ -45,6 +45,8 @@
   </main>
 
   <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwnQzSc-hYoomLXEE3UJKDVaVukGp2e3SXcUn33gV6BuFne1d4rknqMJoApHSfBJehRAw/exec";
+
     const lesson = document.getElementById("lesson");
     for (let i = 1; i <= 50; i++) {
       const option = document.createElement("option");
@@ -54,14 +56,49 @@
     }
 
     const form = document.getElementById("homeworkForm");
+    const status = document.getElementById("status");
+    const button = document.getElementById("sendButton");
+
     form.addEventListener("submit", async function(event) {
       event.preventDefault();
-      const status = document.getElementById("status");
-      const button = document.getElementById("sendButton");
 
-      status.textContent =
-        "Biểu mẫu đã được điền. Chức năng gửi lên Admin cần kết nối máy chủ.";
+      if (!form.reportValidity()) return;
+
+      button.disabled = true;
+      button.textContent = "Đang gửi...";
+      status.textContent = "Đang gửi yêu cầu, vui lòng chờ...";
       status.style.color = "#ffcf55";
+
+      const data = {
+        name: document.getElementById("username").value.trim(),
+        type: "Yêu cầu làm bài tập",
+        plan: "Bài " + document.getElementById("lesson").value,
+        contact: document.getElementById("payment").value,
+        note: document.getElementById("note").value.trim()
+      };
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(data)
+        });
+
+        status.textContent =
+          "Đã gửi yêu cầu. Hãy kiểm tra Gmail để xác nhận đơn đã đến.";
+        status.style.color = "#16a34a";
+        form.reset();
+      } catch (error) {
+        status.textContent =
+          "Không gửi được. Vui lòng thử lại hoặc liên hệ Admin.";
+        status.style.color = "#ff5555";
+      } finally {
+        button.disabled = false;
+        button.textContent = "Gửi yêu cầu";
+      }
     });
   </script>
 </body>

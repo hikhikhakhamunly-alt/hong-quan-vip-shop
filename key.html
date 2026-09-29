@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mua KEY VIP - Hồng Quân</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="tag">HỒNG QUÂN VIP SYSTEM</div>
+    <h1>MUA KEY VIP</h1>
+    <p>Chọn gói thành viên và gửi yêu cầu đặt mua.</p>
+  </header>
+
+  <main class="container" style="display:block;max-width:600px">
+    <section class="panel">
+      <form id="keyForm">
+        <label for="account">Tên tài khoản trên website</label>
+        <input id="account" name="account" type="text"
+               maxlength="80" required
+               placeholder="Nhập tên tài khoản">
+
+        <label for="plan">Chọn gói KEY VIP</label>
+        <select id="plan" name="plan" required>
+          <option value="">-- Chọn gói --</option>
+          <option value="1 tháng" data-price="50000">1 tháng - 50.000đ</option>
+          <option value="2 tháng" data-price="100000">2 tháng - 100.000đ</option>
+          <option value="3 tháng" data-price="120000">3 tháng - 120.000đ</option>
+          <option value="Vĩnh viễn" data-price="150000">Vĩnh viễn - 150.000đ</option>
+        </select>
+
+        <div class="plan" style="margin-top:16px">
+          <h3>Giá gói đã chọn</h3>
+          <strong id="price">Chưa chọn gói</strong>
+        </div>
+
+        <label for="payment">Phương thức thanh toán</label>
+        <select id="payment" name="payment" required>
+          <option value="">-- Chọn phương thức --</option>
+          <option value="Thẻ cào Viettel">Thẻ cào Viettel</option>
+          <option value="Thẻ cào Mobifone">Thẻ cào Mobifone</option>
+          <option value="Thẻ game Garena">Thẻ game Garena</option>
+          <option value="Thẻ game Zing">Thẻ game Zing</option>
+          <option value="Trao đổi trực tiếp">Trao đổi trực tiếp</option>
+        </select>
+
+        <label for="contact">Thông tin liên hệ</label>
+        <input id="contact" name="contact" type="text"
+               maxlength="120" required
+               placeholder="Cách liên hệ với bạn">
+
+        <label for="note">Ghi chú (không bắt buộc)</label>
+        <textarea id="note" name="note" rows="3" maxlength="500"
+                  placeholder="Thông tin thêm nếu có"></textarea>
+
+        <button type="submit">Tạo yêu cầu mua KEY</button>
+        <p id="message" class="status" aria-live="polite"></p>
+      </form>
+
+      <p class="hint">
+        Đây là biểu mẫu thử nghiệm, chưa gửi đơn lên Admin và chưa xử lý thanh toán.
+        Không nhập mã PIN thẻ, mật khẩu hoặc thông tin bí mật vào biểu mẫu.
+        Chỉ nhận KEY sau khi quản lý xác minh thanh toán.
+      </p>
+
+      <a class="button secondary" href="index.html">Quay về trang chủ</a>
+    </section>
+  </main>
+
+  <script>
+    const planSelect = document.getElementById("plan");
+    const priceDisplay = document.getElementById("price");
+    const form = document.getElementById("keyForm");
+    const message = document.getElementById("message");
+
+    planSelect.addEventListener("change", function() {
+      const selected = planSelect.options[planSelect.selectedIndex];
+      const price = selected.dataset.price;
+
+      priceDisplay.textContent = price
+        ? Number(price).toLocaleString("vi-VN") + "đ"
+        : "Chưa chọn gói";
+    });
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const order = {
+        account: document.getElementById("account").value.trim(),
+        plan: planSelect.value,
+        price: planSelect.options[planSelect.selectedIndex].dataset.price,
+        payment: document.getElementById("payment").value,
+        contact: document.getElementById("contact").value.trim(),
+        note: document.getElementById("note").value.trim(),
+        status: "Chờ xác nhận",
+        createdAt: new Date().toISOString()
+      };
+
+      // Bản thử nghiệm: lưu đơn trong trình duyệt hiện tại.
+      // Chưa phải hệ thống nhận đơn thật từ nhiều khách hàng.
+      try {
+        const orders = JSON.parse(
+          sessionStorage.getItem("hqVipDraftOrders") || "[]"
+        );
+        orders.push(order);
+        sessionStorage.setItem(
+          "hqVipDraftOrders",
+          JSON.stringify(orders)
+        );
+
+        message.style.color = "#8cf5c8";
+        message.textContent =
+          "Đã tạo đơn thử nghiệm trên trình duyệt này. " +
+          "Đơn chưa được gửi đến Admin; cần kết nối máy chủ để xử lý thật.";
+
+        form.reset();
+        priceDisplay.textContent = "Chưa chọn gói";
+      } catch (error) {
+        message.style.color = "#ffcf55";
+        message.textContent =
+          "Không lưu được đơn thử nghiệm. Vui lòng thử lại.";
+      }
+    });
+  </script>
+</body>
+</html>

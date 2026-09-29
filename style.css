@@ -1,158 +1,140 @@
-/* ===== GIAO DIỆN XANH DÙNG CHUNG CHO CẢ 3 TRANG ===== */
 
-html {
-  min-height: 100%;
+* {
+  box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   min-height: 100vh;
-  color: #f4faff;
-  background-color: #061a36;
-  background-image:
-    radial-gradient(ellipse at top, rgba(0, 145, 255, 0.28), transparent 55%),
-    linear-gradient(135deg, #061a36, #073b70 55%, #04152e);
-  background-attachment: fixed;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 17px;
-  line-height: 1.6;
+  font-family: Arial, sans-serif;
+  color: #eaf7ff;
+  background:
+    radial-gradient(circle at top, #123c69, transparent 50%),
+    linear-gradient(135deg, #06101f, #0a1c35 55%, #07101e);
 }
 
-/* Tiêu đề */
-h1, h2, h3 {
-  color: #8ed8ff;
+.header {
+  padding: 28px 16px;
   text-align: center;
-  line-height: 1.35;
-  text-shadow: 0 0 12px rgba(0, 174, 255, 0.35);
+  background: rgba(4, 12, 28, 0.8);
+  border-bottom: 1px solid #16cfff;
+  box-shadow: 0 0 24px #00bfff55;
 }
 
-/* Khung nội dung và biểu mẫu */
-main, section, .container, .card, .form-container,
-.login-box, .panel, .content {
-  box-sizing: border-box;
-  max-width: 900px;
-  margin: 20px auto;
+.header h1 {
+  margin: 0 0 10px;
+  color: #5de4ff;
+  text-shadow: 0 0 16px #00bfff;
 }
 
-/* Khung có nền trong để chữ nổi bật */
-.card, .form-container, .login-box, .panel, .content {
+.header a {
+  color: #8beaff;
+  text-decoration: none;
+}
+
+.container {
+  width: min(920px, 92%);
+  margin: 32px auto;
+}
+
+.hero, .panel, .card {
   padding: 24px;
-  color: #f4faff;
-  background: rgba(5, 28, 58, 0.88);
-  border: 1px solid rgba(91, 194, 255, 0.55);
-  border-radius: 18px;
-  box-shadow: 0 0 22px rgba(0, 145, 255, 0.18);
+  border: 1px solid #168ec2;
+  border-radius: 16px;
+  background: rgba(9, 28, 51, 0.92);
+  box-shadow: 0 0 20px #00aaff22;
 }
 
-/* Nhãn và chữ hướng dẫn */
+.hero {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 24px #00cfff66;
+}
+
+.card h2 {
+  color: #5de4ff;
+}
+
+.button, button {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #008cff, #00d9ff);
+  color: #031321;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.panel {
+  max-width: 560px;
+  margin: auto;
+}
+
 label {
   display: block;
-  margin: 14px 0 7px;
-  color: #d9f2ff;
-  font-size: 17px;
-  font-weight: 700;
+  margin: 16px 0 7px;
+  color: #9cecff;
+  font-weight: bold;
 }
 
-/* Ô nhập liệu lớn, dễ nhìn */
-input:not([type="checkbox"]):not([type="radio"]),
-select,
-textarea {
-  box-sizing: border-box;
+input, textarea, select {
   display: block;
   width: 100%;
-  min-height: 52px;
-  margin: 8px 0 16px;
-  padding: 13px 16px;
-  color: #10243b;
-  background: #f5fbff;
-  border: 2px solid #73caff;
-  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid #247ca5;
+  border-radius: 9px;
+  background: #07182b;
+  color: white;
   font: inherit;
-  font-size: 17px;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Ô nhập nhiều dòng */
 textarea {
-  min-height: 120px;
+  min-height: 110px;
   resize: vertical;
 }
 
-/* Khi bấm vào ô nhập */
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #00d5ff;
-  box-shadow: 0 0 0 4px rgba(0, 213, 255, 0.2);
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid #00cfff;
 }
 
-/* Chữ gợi ý trong ô nhập */
-input::placeholder,
-textarea::placeholder {
-  color: #637b91;
-  opacity: 1;
+#result {
+  min-height: 24px;
+  color: #8df7bd;
+  overflow-wrap: anywhere;
 }
 
-/* Nút bấm */
-button, .btn, input[type="submit"] {
-  box-sizing: border-box;
-  min-height: 48px;
-  padding: 12px 22px;
-  color: #ffffff;
-  background: linear-gradient(135deg, #087cf0, #00b9e8);
-  border: 1px solid #80dcff;
-  border-radius: 12px;
-  font: inherit;
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 5px 16px rgba(0, 145, 255, 0.22);
-  transition: transform 0.2s, filter 0.2s;
+footer {
+  padding: 24px;
+  text-align: center;
+  color: #9ab6c9;
 }
 
-button:hover, .btn:hover, input[type="submit"]:hover {
-  filter: brightness(1.12);
-  transform: translateY(-2px);
-}
-
-/* Bảng dữ liệu nếu có */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: #f4faff;
-  background: rgba(3, 23, 49, 0.75);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-th, td {
-  padding: 12px;
-  border: 1px solid rgba(115, 202, 255, 0.35);
-  text-align: left;
-}
-
-th {
-  color: #bdeaff;
-  background: rgba(0, 119, 220, 0.35);
-}
-
-/* Điện thoại và màn hình nhỏ */
-@media (max-width: 600px) {
-  body {
-    padding: 10px;
-    font-size: 16px;
+@media (max-width: 520px) {
+  .container {
+    margin: 20px auto;
   }
 
-  main, section, .container, .card, .form-container,
-  .login-box, .panel, .content {
-    width: 100%;
-    margin: 12px auto;
-    padding: 16px;
-  }
-
-  input:not([type="checkbox"]):not([type="radio"]),
-  select, textarea, button, .btn, input[type="submit"] {
-    font-size: 16px;
-    min-height: 50px;
+  .hero, .panel, .card {
+    padding: 18px;
   }
 }

@@ -3,103 +3,33 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gửi bài tập - Hồng Quân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng ký dịch vụ - HỒNG QUÂN VIP</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="hero">
-    <div class="tag">HỒNG QUÂN VIP SYSTEM</div>
-    <h1>GỬI BÀI TẬP</h1>
-    <p>Điền thông tin để gửi yêu cầu làm bài.</p>
+  <header class="header">
+    <h1>ĐĂNG KÝ DỊCH VỤ</h1>
+    <a href="index.html">← Trang chủ</a>
   </header>
 
-  <main class="container" style="display:block;max-width:600px">
-    <section class="panel">
-      <form id="homeworkForm">
-        <label for="username">Tên tài khoản</label>
-        <input id="username" name="username" required maxlength="80"
-               placeholder="Nhập tên tài khoản">
+  <main class="container">
+    <form id="orderForm" class="panel">
+      <label for="name">Họ và tên</label>
+      <input id="name" name="name" required placeholder="Nhập họ tên">
 
-        <label for="lesson">Chọn bài tập</label>
-        <select id="lesson" name="lesson" required>
-          <option value="">-- Chọn bài --</option>
-        </select>
+      <label for="contact">Thông tin liên hệ</label>
+      <input id="contact" name="contact" required placeholder="Email hoặc cách liên hệ">
 
-        <label for="payment">Hình thức thanh toán</label>
-        <select id="payment" name="payment" required>
-          <option value="">-- Chọn hình thức --</option>
-          <option value="KEY VIP">KEY VIP</option>
-          <option value="Trao đổi trực tiếp">Trao đổi trực tiếp</option>
-        </select>
+      <label for="message">Nội dung yêu cầu</label>
+      <textarea id="message" name="message" required
+        placeholder="Mô tả dịch vụ bạn cần"></textarea>
 
-        <label for="note">Ghi chú hoặc nội dung bài</label>
-        <textarea id="note" name="note" rows="5" maxlength="2000"
-                  placeholder="Nhập yêu cầu hoặc nội dung bài tập"></textarea>
-
-        <button type="submit" id="sendButton">Gửi yêu cầu</button>
-        <p id="status" class="status" aria-live="polite"></p>
-      </form>
-      <a class="button secondary" href="index.html">Quay về trang chủ</a>
-    </section>
+      <button type="submit">Gửi yêu cầu</button>
+      <p id="result" role="status"></p>
+    </form>
   </main>
 
-  <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwnQzSc-hYoomLXEE3UJKDVaVukGp2e3SXcUn33gV6BuFne1d4rknqMJoApHSfBJehRAw/exec";
-
-    const lesson = document.getElementById("lesson");
-    for (let i = 1; i <= 50; i++) {
-      const option = document.createElement("option");
-      option.value = String(i);
-      option.textContent = "Bài " + i;
-      lesson.appendChild(option);
-    }
-
-    const form = document.getElementById("homeworkForm");
-    const status = document.getElementById("status");
-    const button = document.getElementById("sendButton");
-
-    form.addEventListener("submit", async function(event) {
-      event.preventDefault();
-
-      if (!form.reportValidity()) return;
-
-      button.disabled = true;
-      button.textContent = "Đang gửi...";
-      status.textContent = "Đang gửi yêu cầu, vui lòng chờ...";
-      status.style.color = "#ffcf55";
-
-      const data = {
-        name: document.getElementById("username").value.trim(),
-        type: "Yêu cầu làm bài tập",
-        plan: "Bài " + document.getElementById("lesson").value,
-        contact: document.getElementById("payment").value,
-        note: document.getElementById("note").value.trim()
-      };
-
-      try {
-        await fetch(SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
-          body: JSON.stringify(data)
-        });
-
-        status.textContent =
-          "Đã gửi yêu cầu. Hãy kiểm tra Gmail để xác nhận đơn đã đến.";
-        status.style.color = "#16a34a";
-        form.reset();
-      } catch (error) {
-        status.textContent =
-          "Không gửi được. Vui lòng thử lại hoặc liên hệ Admin.";
-        status.style.color = "#ff5555";
-      } finally {
-        button.disabled = false;
-        button.textContent = "Gửi yêu cầu";
-      }
-    });
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
